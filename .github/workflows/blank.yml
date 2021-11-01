@@ -22,7 +22,7 @@ jobs:
         python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
-        echo ${{ environments }}
+        echo ${{ github }}
         python -m pip install --upgrade pip
         python -m pip install flit
     - name: Publish Flit
