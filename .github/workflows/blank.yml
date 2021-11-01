@@ -15,14 +15,14 @@ jobs:
       - name: check tag ${{ github.ref }}
         id: check-tag
         run: |
-          echo ${{ github.ref }}
-          if [[${{ github.ref }} =~ v.* ]]; then
+          if [[${{ github.ref }} =~ refs\/tags\/release\/v.* ]]; then
             echo "::set-output name=run_jobs::true"
           else
             echo "::set-output name=run_jobs::false"
           fi
   build:
-    
+    needs: [check_tag]
+    if: needs.check_tag.outputs.run_other_jobs == 'true'
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
