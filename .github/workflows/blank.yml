@@ -26,7 +26,7 @@ jobs:
         python -m pip install flit
     - name: Publish Flit
       env:
-          FLIT_USERNAME: ${{ secrets.PYPI_USERNAME }}
-          FLIT_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
+          FLIT_USERNAME: ${{ secrets.S_1 }}
+          FLIT_PASSWORD: ${{ secrets.S_2 }}
       run: flit publish
   
