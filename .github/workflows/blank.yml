@@ -1,11 +1,10 @@
 name: Python package
 
 on:
-#   push:
-#     branches: [ main ]
+
   release:
-    tags:
-    - 'v*'
+    types: [published]
+
       
 
 jobs:
