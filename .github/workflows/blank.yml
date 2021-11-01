@@ -8,28 +8,14 @@ on:
       
 
 jobs:
-  check_tag:
-    runs-on: ubuntu-latest
-    outputs:
-      run_other_jobs: ${{ steps.check-tag.outputs.run_jobs }}
-    steps:
-      - name: check tag ${{ github.ref }}
-        id: check-tag
-        run: |
-          if [[${{ github.ref }} =~ refs\/tags\/release\/v.* ]]; then
-            echo "::set-output name=run_jobs::true"
-          else
-            echo "::set-output name=run_jobs::false"
-          fi
+
   build:
-    needs: [check_tag]
-    if: needs.check_tag.outputs.run_other_jobs == 'true'
     
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.8"]
+        python-version: ["3.10"]
 
     steps:
     - uses: actions/checkout@v2
@@ -41,6 +27,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         python -m pip install flit
+  
+  publish:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10"]
+    steps:
     - name: Publish Flit
       env:
           FLIT_USERNAME: ${{ secrets.PYPI_USERNAME }}
